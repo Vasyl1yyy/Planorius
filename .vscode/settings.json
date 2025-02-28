@@ -1,5 +1,16 @@
 {
   "tailwindCSS.includeLanguages": {
     "tsx": "tsx"
-  }
+  },
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5000,
+      "driver": "PostgreSQL",
+      "name": "postgres",
+      "database": "planorius",
+      "username": "postgres"
+    }
+  ]
 }

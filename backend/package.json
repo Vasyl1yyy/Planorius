@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx src/server.ts"
+    "dev": "tsx src/index.ts",
+    "generate:migrations": "drizzle-kit generate:pg",
+    "push:migrations": "drizzle-kit push"
   },
   "keywords": [],
   "author": "",
@@ -18,13 +20,18 @@
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.40.0",
     "fastify": "^5.2.1",
+    "generate": "^0.14.0",
     "pg": "^8.13.3",
     "pino": "^9.6.0",
+    "postgres": "^3.4.5",
+    "schema": "^0.2.1",
     "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^22.13.5",
+    "@types/pg": "^8.11.11",
+    "drizzle-kit": "^0.30.5",
     "tsx": "^4.19.3",
     "typescript": "^5.7.3"
   }
