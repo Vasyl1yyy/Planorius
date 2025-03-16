@@ -33,7 +33,7 @@ export default function SignIn() {
         </div>
         <div className="flex justify-center gap-5">
           <button className="bg-basic rounded-full p-2 transition ease-in-out delay-100 text-black-100 w-full hover:bg-black-200 hover:text-basic border-2 border-basic">
-            Create
+            Sign In
           </button>
           <Link
             to="/sign-up"

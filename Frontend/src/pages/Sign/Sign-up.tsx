@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import InputSign from '../../components/input/inputSign';
 import icon from '../../img/Planorius.png';
 import { useState } from 'react';
+import { registerUser } from '../../api/api';
 
 export default function SignUp() {
   const [username, setUsername] = useState('');
@@ -50,7 +51,10 @@ export default function SignUp() {
           />
         </div>
         <div className="flex justify-center gap-5">
-          <button className="bg-basic rounded-full p-2 transition ease-in-out delay-100 text-black-100 w-full hover:bg-black-200 hover:text-basic border-2 border-basic">
+          <button
+            className="bg-basic rounded-full p-2 transition ease-in-out delay-100 text-black-100 w-full hover:bg-black-200 hover:text-basic border-2 border-basic"
+            onClick={() => registerUser(email, username, password)}
+          >
             Create
           </button>
           <Link
