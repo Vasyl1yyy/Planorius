@@ -1,21 +1,20 @@
-import { useQuery } from '@tanstack/react-query';
+import { Route, Routes } from 'react-router';
+import Home from './pages/Home';
+import SignIn from './pages/Sign/Sign-in';
+import SignUp from './pages/Sign/Sign-up';
 
-const fetchTest = async () => {
-  const res = await fetch('http://localhost:3000/api/test');
-  if (!res.ok) throw new Error('Помилка запиту');
-  return res.json();
+const App = () => {
+  return (
+    <div>
+      <h1>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="sign-in" element={<SignIn />} />
+          <Route path="sign-up" element={<SignUp />} />
+        </Routes>
+      </h1>
+    </div>
+  );
 };
-
-function App() {
-  const { data, error, isLoading } = useQuery({
-    queryKey: ['test'],
-    queryFn: fetchTest,
-  });
-
-  if (isLoading) return <p>Завантаження...</p>;
-  if (error) return <p>Помилка: {error.message}</p>;
-
-  return <p>{data.message}</p>;
-}
 
 export default App;

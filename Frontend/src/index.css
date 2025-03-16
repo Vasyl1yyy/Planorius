@@ -1,1 +1,15 @@
 @import 'tailwindcss';
+@config "../tailwind.config.js";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #121212;
+  min-width: 100vw;
+  min-height: 100vh;
+  font-family: 'peridot-devanagari', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}

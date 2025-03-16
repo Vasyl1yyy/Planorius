@@ -1,10 +1,17 @@
+import { eq, or } from 'drizzle-orm';
 import { db } from '../db/db';
 import { users } from '../db/schema/users';
 import bcrypt from 'bcrypt';
+
 type NewUser = typeof users.$inferInsert;
 
 const addUsers = async (user: NewUser) => {
-  return db.insert(users).values(user);
+  try {
+    return await db.insert(users).values(user);
+  } catch (error) {
+    console.error('DB Error:', error);
+    throw new Error('Помилка при створенні користувача');
+  }
 };
 
 const hashPassword = async (password: string) => {
@@ -12,4 +19,11 @@ const hashPassword = async (password: string) => {
   return passwordHash;
 };
 
-export { addUsers, hashPassword };
+const existingUser = async (email: string, username: string) => {
+  const existingUser = await db.query.users.findFirst({
+    where: or(eq(users.email, email), eq(users.username, username)),
+  });
+  return existingUser;
+};
+
+export { addUsers, hashPassword, existingUser };
