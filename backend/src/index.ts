@@ -5,7 +5,7 @@ import fastifyCors from '@fastify/cors';
 const fastify = Fastify();
 
 fastify.register(fastifyCors, {
-  origin: 'http://localhost:5175',
+  origin: 'http://localhost:5173',
   credentials: true,
 });
 

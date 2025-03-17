@@ -3,12 +3,24 @@ import InputSign from '../../components/input/inputSign';
 import icon from '../../img/Planorius.png';
 import { useState } from 'react';
 import { registerUser } from '../../api/api';
+import { useStoreUser } from '../../store/stateZustand';
 
 export default function SignUp() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPass, setRepeatPass] = useState('');
+  const setUser = useStoreUser((state) => state.setUser);
+
+  const addUser = () => {
+    registerUser(email, username, password)
+      .then((user) => {
+        setUser(user[0]);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">
@@ -53,7 +65,7 @@ export default function SignUp() {
         <div className="flex justify-center gap-5">
           <button
             className="bg-basic rounded-full p-2 transition ease-in-out delay-100 text-black-100 w-full hover:bg-black-200 hover:text-basic border-2 border-basic"
-            onClick={() => registerUser(email, username, password)}
+            onClick={() => addUser()}
           >
             Create
           </button>

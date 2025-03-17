@@ -7,7 +7,7 @@ type NewUser = typeof users.$inferInsert;
 
 const addUsers = async (user: NewUser) => {
   try {
-    return await db.insert(users).values(user);
+    return await db.insert(users).values(user).returning();
   } catch (error) {
     console.error('DB Error:', error);
     throw new Error('Помилка при створенні користувача');

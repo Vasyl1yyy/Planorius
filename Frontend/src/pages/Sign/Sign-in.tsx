@@ -36,7 +36,7 @@ export default function SignIn() {
             Sign In
           </button>
           <Link
-            to="/sign-up"
+            to="/"
             className="bg-black-200 rounded-full p-2 transition ease-in-out delay-100 text-basic border-2 border-black-400 w-full hover:border-basic text-center"
           >
             Sign Up

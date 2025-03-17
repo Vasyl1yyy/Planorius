@@ -11,6 +11,7 @@ export const registerUser = async (
     });
 
     const data = await response.json();
+    return data;
     console.log('User created:', data);
   } catch (error) {
     console.error('Error:', error);
