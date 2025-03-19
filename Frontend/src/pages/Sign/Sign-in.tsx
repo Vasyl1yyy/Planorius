@@ -1,11 +1,26 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import InputSign from '../../components/input/inputSign';
 import icon from '../../img/Planorius.png';
 import { useState } from 'react';
+import { loginUser } from '../../api/api';
+import { useStoreUser } from '../../store/stateZustand';
 
 export default function SignIn() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const setUser = useStoreUser((state) => state.setUser);
+  const navigate = useNavigate();
+
+  const handleSignIn = () => {
+    loginUser(username, password)
+      .then((user) => {
+        setUser(user.user);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    navigate('/');
+  };
   return (
     <div className="w-screen h-screen flex justify-center items-center">
       <img className="max-h-full opacity-5 absolute z-0" src={icon} alt="" />
@@ -32,7 +47,10 @@ export default function SignIn() {
           />
         </div>
         <div className="flex justify-center gap-5">
-          <button className="bg-basic rounded-full p-2 transition ease-in-out delay-100 text-black-100 w-full hover:bg-black-200 hover:text-basic border-2 border-basic">
+          <button
+            className="bg-basic rounded-full p-2 transition ease-in-out delay-100 text-black-100 w-full hover:bg-black-200 hover:text-basic border-2 border-basic"
+            onClick={() => handleSignIn()}
+          >
             Sign In
           </button>
           <Link

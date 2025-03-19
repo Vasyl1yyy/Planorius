@@ -14,6 +14,17 @@ const addUsers = async (user: NewUser) => {
   }
 };
 
+const loginUser = async (username: string) => {
+  try {
+    return await db.query.users.findFirst({
+      where: eq(users.username, username),
+    });
+  } catch (error) {
+    console.error('DB Error:', error);
+    throw new Error('Помилка при вході користувача');
+  }
+};
+
 const hashPassword = async (password: string) => {
   const passwordHash = await bcrypt.hash(password, 10);
   return passwordHash;
@@ -26,4 +37,4 @@ const existingUser = async (email: string, username: string) => {
   return existingUser;
 };
 
-export { addUsers, hashPassword, existingUser };
+export { addUsers, hashPassword, existingUser, loginUser };

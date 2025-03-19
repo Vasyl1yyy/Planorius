@@ -1,5 +1,5 @@
 import Fastify from 'fastify';
-import { routerUsersAdd } from './routes/routesUsers';
+import { routerUsersAdd, routerUsersLogin } from './routes/routesUsers';
 import fastifyCors from '@fastify/cors';
 
 const fastify = Fastify();
@@ -9,7 +9,7 @@ fastify.register(fastifyCors, {
   credentials: true,
 });
 
-fastify.register(routerUsersAdd);
+fastify.register(routerUsersAdd, routerUsersLogin);
 
 fastify.listen({ port: 3000 }, () => {
   console.log('server 3000');
