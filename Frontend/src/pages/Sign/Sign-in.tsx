@@ -14,7 +14,7 @@ export default function SignIn() {
   const handleSignIn = () => {
     loginUser(username, password)
       .then((user) => {
-        setUser(user.user);
+        setUser(user);
       })
       .catch((error) => {
         console.error(error);

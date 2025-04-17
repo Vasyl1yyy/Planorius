@@ -15,7 +15,7 @@ export default function SignUp() {
   const addUser = () => {
     registerUser(email, username, password)
       .then((user) => {
-        setUser(user[0]);
+        setUser(user);
       })
       .catch((error) => {
         console.error(error);

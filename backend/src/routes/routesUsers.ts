@@ -33,7 +33,12 @@ export async function routerUsersAdd(fastify: FastifyInstance) {
           username,
           passwordHash: hashedPassword,
         });
-        reply.send(result);
+        reply.send({
+          id: result[0].id,
+          username: result[0].username,
+          email: result[0].email,
+          level: result[0].level,
+        });
       } catch (err) {
         console.log(err);
         reply.status(500).send({ error: 'Failed to create user' });
@@ -58,7 +63,12 @@ export async function routerUsersLogin(fastify: FastifyInstance) {
             .status(401)
             .send({ error: 'Invalid username or password' });
         }
-        reply.send({ user });
+        reply.send({
+          username: user.username,
+          email: user.email,
+          level: user.level,
+          id: user.id,
+        });
       } catch (err) {
         console.log(err);
         reply.status(500).send({ error: 'Failed to login' });

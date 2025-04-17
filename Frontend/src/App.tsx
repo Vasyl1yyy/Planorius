@@ -5,8 +5,19 @@ import SignUp from './pages/Sign/Sign-up';
 import { useStoreUser } from './store/stateZustand';
 
 const App = () => {
-  const user = useStoreUser((state) => state.user);
+  const userDB = useStoreUser((state) => state.user);
+  const setUser = useStoreUser((state) => state.setUser);
 
+  let user = null;
+
+  const localStorageUser = localStorage.getItem('token');
+
+  if (userDB !== null) {
+    user = userDB;
+  } else if (localStorageUser !== null) {
+    setUser(JSON.parse(localStorageUser));
+    user = userDB;
+  }
   return (
     <div>
       <h1>
