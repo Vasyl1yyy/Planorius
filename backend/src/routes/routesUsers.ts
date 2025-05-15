@@ -8,6 +8,8 @@ import {
 } from '../controllers/constrollersUsers';
 import bcrypt from 'bcrypt';
 import jwt from '@fastify/jwt';
+import cookies from '@fastify/cookie';
+import { get } from 'http';
 
 interface CreateUserRequest {
   email: string;
@@ -35,6 +37,7 @@ export async function routerUsersAdd(fastify: FastifyInstance) {
           username,
           passwordHash: hashedPassword,
         });
+
         const token = fastify.jwt.sign({ id: result[0].id });
         reply.send({
           user: {
@@ -70,16 +73,36 @@ export async function routerUsersLogin(fastify: FastifyInstance) {
             .send({ error: 'Invalid username or password' });
         }
 
-        const token = fastify.jwt.sign({ id: user.id });
-        reply.send({
-          user: {
-            username: user.username,
-            email: user.email,
-            level: user.level,
-            id: user.id,
-          },
-          token: token,
-        });
+        const accessToken = fastify.jwt.sign(
+          { id: user.id },
+          {
+            expiresIn: '10m',
+          }
+        );
+        const refreshToken = fastify.jwt.sign(
+          { id: user.id },
+          {
+            expiresIn: '15d',
+          }
+        );
+
+        reply
+          .setCookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            path: '/refreshToken',
+            sameSite: 'strict',
+            secure: false, // Set to true in production
+            maxAge: 15 * 24 * 60 * 60, // 15 days
+          })
+          .send({
+            user: {
+              username: user.username,
+              email: user.email,
+              level: user.level,
+              id: user.id,
+            },
+            token: accessToken,
+          });
       } catch (err) {
         console.log(err);
         reply.status(500).send({ error: 'Failed to login' });
@@ -116,4 +139,46 @@ export async function routerUsersToken(fastify: FastifyInstance) {
       reply.status(500).send({ error: 'Failed to verify token' });
     }
   });
+}
+
+export async function routerUsersRefreshToken(fastify: FastifyInstance) {
+  fastify.post(
+    '/refreshToken',
+    async (req: FastifyRequest, reply: FastifyReply) => {
+      try {
+        const refreshToken = req.cookies.refreshToken;
+        if (!refreshToken) {
+          return reply
+            .status(401)
+            .send({ error: 'Refresh token not provided' });
+        }
+        interface JwtPayload {
+          id: string;
+        }
+        const decoded = fastify.jwt.verify(refreshToken) as JwtPayload;
+        const user = await userId(decoded.id);
+        if (!user) {
+          return reply.status(403).send({ error: 'Invalid refresh token' });
+        }
+        const newAccessToken = fastify.jwt.sign(
+          { id: user.id },
+          {
+            expiresIn: '10m',
+          }
+        );
+        reply.send({
+          user: {
+            username: user.username,
+            email: user.email,
+            level: user.level,
+            id: user.id,
+          },
+          token: newAccessToken,
+        });
+      } catch (err) {
+        console.log(err);
+        reply.status(500).send({ error: 'Failed to refresh token' });
+      }
+    }
+  );
 }

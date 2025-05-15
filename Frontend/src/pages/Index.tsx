@@ -4,9 +4,6 @@ import HeaderRight from './Header/HeaderRight';
 
 export default function Index() {
   const user = useStoreUser((state) => state.user);
-  if (localStorage.getItem('token') === null) {
-    localStorage.setItem('token', JSON.stringify(user));
-  }
 
   return (
     <div className="flex flex-col items-center justify-center h-screen relative w-full">

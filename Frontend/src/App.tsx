@@ -3,7 +3,7 @@ import Index from './pages/Index';
 import SignIn from './pages/Sign/Sign-in';
 import SignUp from './pages/Sign/Sign-up';
 import { useStoreUser } from './store/stateZustand';
-import { token } from './api/api';
+import { refreshToken, token } from './api/api';
 import { useEffect } from 'react';
 
 const App = () => {
@@ -12,13 +12,18 @@ const App = () => {
   const fetchUser = async () => {
     const userData = await token();
     if (userData) {
-      setUser(userData);
+      return userData;
     }
+    const refreshData = await refreshToken();
+    if (refreshData) {
+      return refreshData;
+    }
+    return null;
   };
 
   useEffect(() => {
     const fetchUserData = async () => {
-      await fetchUser();
+      setUser(await fetchUser());
     };
     fetchUserData();
   }, []);
