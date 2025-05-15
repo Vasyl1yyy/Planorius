@@ -3,21 +3,26 @@ import Index from './pages/Index';
 import SignIn from './pages/Sign/Sign-in';
 import SignUp from './pages/Sign/Sign-up';
 import { useStoreUser } from './store/stateZustand';
+import { token } from './api/api';
+import { useEffect } from 'react';
 
 const App = () => {
-  const userDB = useStoreUser((state) => state.user);
+  const user = useStoreUser((state) => state.user);
   const setUser = useStoreUser((state) => state.setUser);
+  const fetchUser = async () => {
+    const userData = await token();
+    if (userData) {
+      setUser(userData);
+    }
+  };
 
-  let user = null;
+  useEffect(() => {
+    const fetchUserData = async () => {
+      await fetchUser();
+    };
+    fetchUserData();
+  }, []);
 
-  const localStorageUser = localStorage.getItem('token');
-
-  if (userDB !== null) {
-    user = userDB;
-  } else if (localStorageUser !== null) {
-    setUser(JSON.parse(localStorageUser));
-    user = userDB;
-  }
   return (
     <div>
       <h1>
