@@ -36,18 +36,44 @@ export async function routerUsersAdd(fastify: FastifyInstance) {
           email,
           username,
           passwordHash: hashedPassword,
+          token: '',
         });
+        const refreshToken = fastify.jwt.sign(
+          { id: result[0].id },
+          {
+            expiresIn: '15d',
+          }
+        );
+        const accessToken = fastify.jwt.sign(
+          { id: result[0].id },
+          {
+            expiresIn: '10m',
+          }
+        );
 
-        const token = fastify.jwt.sign({ id: result[0].id });
-        reply.send({
-          user: {
-            id: result[0].id,
-            username: result[0].username,
-            email: result[0].email,
-            level: result[0].level,
-          },
-          token: token,
-        });
+        reply
+          .setCookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            path: '/refreshToken',
+            sameSite: 'strict',
+            secure: false, // Set to true in production
+            maxAge: 15 * 24 * 60 * 60, // 15 days
+          })
+          .setCookie('accessToken', accessToken, {
+            httpOnly: true,
+            path: '/token',
+            sameSite: 'strict',
+            secure: false, // Set to true in production
+            maxAge: 10 * 60, // 10 minutes
+          })
+          .send({
+            user: {
+              id: result[0].id,
+              username: result[0].username,
+              email: result[0].email,
+              level: result[0].level,
+            },
+          });
       } catch (err) {
         console.log(err);
         reply.status(500).send({ error: 'Failed to create user' });
@@ -94,6 +120,13 @@ export async function routerUsersLogin(fastify: FastifyInstance) {
             secure: false, // Set to true in production
             maxAge: 15 * 24 * 60 * 60, // 15 days
           })
+          .setCookie('accessToken', accessToken, {
+            httpOnly: true,
+            path: '/token',
+            sameSite: 'strict',
+            secure: false, // Set to true in production
+            maxAge: 10 * 60, // 10 minutes
+          })
           .send({
             user: {
               username: user.username,
@@ -101,7 +134,6 @@ export async function routerUsersLogin(fastify: FastifyInstance) {
               level: user.level,
               id: user.id,
             },
-            token: accessToken,
           });
       } catch (err) {
         console.log(err);
@@ -114,7 +146,7 @@ export async function routerUsersLogin(fastify: FastifyInstance) {
 export async function routerUsersToken(fastify: FastifyInstance) {
   fastify.post('/token', async (req: FastifyRequest, reply: FastifyReply) => {
     try {
-      const { token } = req.body as { token: string };
+      const token = req.cookies.accessToken;
       if (!token) {
         return reply.status(401).send({ error: 'Token not provided' });
       }
@@ -166,15 +198,35 @@ export async function routerUsersRefreshToken(fastify: FastifyInstance) {
             expiresIn: '10m',
           }
         );
-        reply.send({
-          user: {
-            username: user.username,
-            email: user.email,
-            level: user.level,
-            id: user.id,
-          },
-          token: newAccessToken,
-        });
+        const newRefreshToken = fastify.jwt.sign(
+          { id: user.id },
+          {
+            expiresIn: '15d',
+          }
+        );
+        reply
+          .setCookie('refreshToken', newRefreshToken, {
+            httpOnly: true,
+            path: '/refreshToken',
+            sameSite: 'strict',
+            secure: false, // Set to true in production
+            maxAge: 15 * 24 * 60 * 60, // 15 days
+          })
+          .setCookie('accessToken', newAccessToken, {
+            httpOnly: true,
+            path: '/token',
+            sameSite: 'strict',
+            secure: false, // Set to true in production
+            maxAge: 10 * 60, // 10 minutes
+          })
+          .send({
+            user: {
+              username: user.username,
+              email: user.email,
+              level: user.level,
+              id: user.id,
+            },
+          });
       } catch (err) {
         console.log(err);
         reply.status(500).send({ error: 'Failed to refresh token' });

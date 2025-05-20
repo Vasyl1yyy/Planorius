@@ -1,3 +1,4 @@
+import { token } from './../../../../Frontend/src/api/api';
 import { pgTable, serial, text, integer, timestamp } from 'drizzle-orm/pg-core';
 
 export const users = pgTable('users', {
@@ -6,5 +7,6 @@ export const users = pgTable('users', {
   passwordHash: text('password_hash').notNull(),
   username: text('username').notNull().unique(),
   level: integer('level').default(0),
+  token: text('token').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
