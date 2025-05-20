@@ -36,7 +36,6 @@ export async function routerUsersAdd(fastify: FastifyInstance) {
           email,
           username,
           passwordHash: hashedPassword,
-          token: '',
         });
         const refreshToken = fastify.jwt.sign(
           { id: result[0].id },
