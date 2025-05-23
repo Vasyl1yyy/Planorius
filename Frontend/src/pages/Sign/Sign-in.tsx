@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router';
 import InputSign from '../../components/input/inputSign';
 import icon from '../../img/Planorius.png';
 import { useState } from 'react';
-import { loginUser } from '../../api/api';
+import { loginUser } from '../../api/apiUser';
 import { useStoreUser } from '../../store/stateZustand';
 
 export default function SignIn() {

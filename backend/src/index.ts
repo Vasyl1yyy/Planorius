@@ -1,14 +1,13 @@
 import Fastify from 'fastify';
-import {
-  routerUsersAdd,
-  routerUsersLogin,
-  routerUsersRefreshToken,
-  routerUsersToken,
-} from './routes/routesUsers';
+import { routerUsersAdd, routerUsersLogin } from './routes/routesUsers';
 import fastifyCors from '@fastify/cors';
 import jwt from '@fastify/jwt';
 import dotenv from 'dotenv';
 import cookie, { FastifyCookieOptions } from '@fastify/cookie';
+import {
+  routerUsersRefreshToken,
+  routerUsersToken,
+} from './routes/routesToken';
 
 dotenv.config();
 

@@ -3,7 +3,7 @@ import Index from './pages/Index';
 import SignIn from './pages/Sign/Sign-in';
 import SignUp from './pages/Sign/Sign-up';
 import { useStoreUser } from './store/stateZustand';
-import { refreshToken, token } from './api/api';
+import { refreshToken, token } from './api/apiToken';
 import { useEffect } from 'react';
 
 const App = () => {

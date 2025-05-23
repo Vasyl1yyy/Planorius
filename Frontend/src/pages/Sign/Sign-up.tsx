@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 import InputSign from '../../components/input/inputSign';
 import icon from '../../img/Planorius.png';
 import { useState } from 'react';
-import { registerUser } from '../../api/api';
+import { registerUser } from '../../api/apiUser';
 import { useStoreUser } from '../../store/stateZustand';
 
 export default function SignUp() {

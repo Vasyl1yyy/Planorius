@@ -1,4 +1,4 @@
-import { token } from './../../../../Frontend/src/api/api';
+import { token } from '../../../../Frontend/src/api/apiUser';
 import { pgTable, serial, text, integer, timestamp } from 'drizzle-orm/pg-core';
 
 export const users = pgTable('users', {
