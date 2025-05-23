@@ -12,6 +12,9 @@ export const registerUser = async (
     });
 
     const data = await response.json();
+    if (response.status === 500) {
+      return false;
+    }
     return data.user;
   } catch (error) {
     console.error('Error:', error);
