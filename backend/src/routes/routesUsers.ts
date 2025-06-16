@@ -28,7 +28,10 @@ export async function routerUsersAdd(fastify: FastifyInstance) {
         const { email, username, password } = req.body;
         const hashedPassword = await hashPassword(password);
 
-        if (await existingUser(email, username)) {
+        const testExistingUser = await existingUser(email, username);
+
+        if (testExistingUser) {
+          reply.send(testExistingUser);
           throw new Error('User already exists');
         }
 
@@ -92,10 +95,11 @@ export async function routerUsersLogin(fastify: FastifyInstance) {
         const { username, password } = req.body;
         const user = await loginUser(username);
 
-        if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
-          return reply
-            .status(401)
-            .send({ error: 'Invalid username or password' });
+        if (!user) {
+          return reply.status(500).send(1);
+        }
+        if (!(await bcrypt.compare(password, user.passwordHash))) {
+          return reply.status(500).send(2);
         }
 
         const accessToken = fastify.jwt.sign(

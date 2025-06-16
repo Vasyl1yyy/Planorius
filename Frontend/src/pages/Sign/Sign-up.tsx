@@ -11,32 +11,40 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [repeatPass, setRepeatPass] = useState('');
   const setUser = useStoreUser((state) => state.setUser);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(0);
 
   const addUser = () => {
-    if (password !== repeatPass) {
-      setError('Passwords do not match');
-      return;
-    }
-    if (username.length < 4) {
-      setError('Username must be at least 4 characters long');
-      return;
-    }
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters long');
+    if (username.length < 4 || username.length > 20) {
+      setError(1);
       return;
     }
     if (!email.includes('@')) {
-      setError('Email must be valid');
+      setError(4);
+      return;
+    }
+    if (password.length < 8) {
+      setError(3);
+      return;
+    }
+    if (password !== repeatPass) {
+      setError(2);
       return;
     }
     registerUser(email, username, password)
       .then((user) => {
+        if (user === 1) {
+          setError(5);
+          return;
+        }
+        if (user === 2) {
+          setError(6);
+          return;
+        }
         setUser(user);
       })
       .catch((error) => {
         console.error(error);
-        setError('Failed to create user');
+        setError(5);
       });
   };
 
@@ -55,6 +63,16 @@ export default function SignUp() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+          {error === 1 && (
+            <p className="text-red-500 text-xs ml-5 mt-1">
+              Username must be between 4 and 20 characters.
+            </p>
+          )}
+          {error === 5 && (
+            <p className="text-red-500 text-xs ml-5 mt-1">
+              This username is already taken. Please choose another one.
+            </p>
+          )}
         </div>
         <div>
           <p className="text-basic text-sm ml-5 mb-[-3px]">EMAIL</p>
@@ -63,6 +81,16 @@ export default function SignUp() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          {error === 4 && (
+            <p className="text-red-500 text-xs ml-5 mt-1">
+              Please enter a valid email address.
+            </p>
+          )}
+          {error === 6 && (
+            <p className="text-red-500 text-xs ml-5 mt-1">
+              This email is already registered. Please use a different one.
+            </p>
+          )}
         </div>
         <div>
           <p className="text-basic text-sm ml-5 mb-[-3px]">PASSWORD</p>
@@ -71,6 +99,11 @@ export default function SignUp() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          {error === 3 && (
+            <p className="text-red-500 text-xs ml-5 mt-1">
+              Password must be at least 8 characters long.
+            </p>
+          )}
         </div>
         <div>
           <p className="text-basic text-sm ml-5 mb-[-3px]">REPEAT PASSWORD</p>
@@ -79,11 +112,12 @@ export default function SignUp() {
             value={repeatPass}
             onChange={(e) => setRepeatPass(e.target.value)}
           />
+          {error === 2 && (
+            <p className="text-red-500 text-xs ml-5 mt-1">
+              Passwords do not match.
+            </p>
+          )}
         </div>
-
-        {error && (
-          <p className="text-red-500 text-sm text-center mt-2">{error}</p>
-        )}
         <div className="flex justify-center gap-5">
           <button
             className="bg-basic rounded-full p-2 transition ease-in-out delay-100 text-black-100 w-full hover:bg-black-200 hover:text-basic border-2 border-basic"

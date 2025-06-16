@@ -12,8 +12,8 @@ export const registerUser = async (
     });
 
     const data = await response.json();
-    if (response.status === 500) {
-      return false;
+    if (response.status === 500 || data === 1 || data === 2) {
+      return data;
     }
     return data.user;
   } catch (error) {
@@ -31,8 +31,11 @@ export const loginUser = async (username: string, password: string) => {
     });
 
     const data = await response.json();
+    if (response.status === 500 || data === 1 || data === 2) {
+      return data;
+    }
     return data.user;
   } catch (error) {
-    console.error('Error:', error);
+    console.log('Error:', error);
   }
 };

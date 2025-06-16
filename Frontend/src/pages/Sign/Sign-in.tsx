@@ -10,16 +10,22 @@ export default function SignIn() {
   const [password, setPassword] = useState('');
   const setUser = useStoreUser((state) => state.setUser);
   const navigate = useNavigate();
+  const [error, setError] = useState(0);
 
   const handleSignIn = () => {
     loginUser(username, password)
       .then((user) => {
+        if (user === 1 || user === 2) {
+          setError(user);
+          console.log('Error:', user);
+          return;
+        }
         setUser(user);
+        navigate('/');
       })
       .catch((error) => {
         console.error(error);
       });
-    navigate('/');
   };
   return (
     <div className="w-screen h-screen flex justify-center items-center">
@@ -36,6 +42,11 @@ export default function SignIn() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+          {error === 1 && (
+            <p className="text-red-500 text-sm ml-5 mt-1">
+              Incorrect username or email
+            </p>
+          )}
         </div>
 
         <div>
@@ -45,6 +56,9 @@ export default function SignIn() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          {error === 2 && (
+            <p className="text-red-500 text-sm ml-5 mt-1">Incorrect password</p>
+          )}
         </div>
         <div className="flex justify-center gap-5">
           <button

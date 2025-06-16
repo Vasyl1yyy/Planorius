@@ -42,10 +42,18 @@ const hashPassword = async (password: string) => {
 };
 
 const existingUser = async (email: string, username: string) => {
-  const existingUser = await db.query.users.findFirst({
-    where: or(eq(users.email, email), eq(users.username, username)),
+  const existingUsername = await db.query.users.findFirst({
+    where: eq(users.username, username),
   });
-  return existingUser;
+  const existingEmail = await db.query.users.findFirst({
+    where: eq(users.email, email),
+  });
+  if (existingUsername) {
+    return 1;
+  }
+  if (existingEmail) {
+    return 2;
+  }
 };
 
 export { addUsers, hashPassword, existingUser, loginUser, userId };
