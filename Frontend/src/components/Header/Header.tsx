@@ -14,7 +14,7 @@ export default function Header() {
         {user && (
           <HeaderRight
             username={user.username}
-            avatar={'A'}
+            avatar={user.avatar}
             level={user.level}
           />
         )}
