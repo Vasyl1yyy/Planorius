@@ -1,6 +1,6 @@
-import { useStoreUser } from '../store/stateZustand';
-import HeaderLeft from '../components/Header/HeaderLeft';
-import HeaderRight from '../components/Header/HeaderRight';
+import { useStoreUser } from '../../store/stateZustand';
+import HeaderLeft from './headerComponents/HeaderLeft';
+import HeaderRight from './headerComponents/HeaderRight';
 
 export default function Header() {
   const user = useStoreUser((state) => state.user);
@@ -12,7 +12,11 @@ export default function Header() {
       </header>
       <div className="fixed right-4 h-full pt-8 top-0">
         {user && (
-          <HeaderRight username={user.username} avatar="V" level={user.level} />
+          <HeaderRight
+            username={user.username}
+            avatar={'A'}
+            level={user.level}
+          />
         )}
       </div>
     </>

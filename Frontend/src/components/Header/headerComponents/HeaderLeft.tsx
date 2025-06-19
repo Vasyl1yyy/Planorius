@@ -1,4 +1,4 @@
-import icon from '../../img/Planorius.png';
+import icon from '../../../img/Planorius.png';
 import { FaBars } from 'react-icons/fa6';
 import { GoHomeFill } from 'react-icons/go';
 import { CgGoogleTasks } from 'react-icons/cg';
@@ -9,7 +9,7 @@ import { BsFillPersonFill } from 'react-icons/bs';
 import { RiSettings4Fill } from 'react-icons/ri';
 import { NavLink } from 'react-router';
 import { useState } from 'react';
-import NavLinkComponents from './headerComponents/NavLinkComponents';
+import NavLinkComponents from './headerComponentsEment/NavLinkComponents';
 
 export default function HeaderLeft() {
   const [active, setActive] = useState('w-14');
