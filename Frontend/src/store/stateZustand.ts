@@ -1,12 +1,21 @@
 import { create } from 'zustand';
 
 interface UserState {
-  user: { id: string; email: string; username: string; level: number } | null;
+  user: {
+    id: string;
+    email: string;
+    username: string;
+    level: number;
+    avatar: string;
+    banner: string;
+  } | null;
   setUser: (user: {
     id: string;
     email: string;
     username: string;
     level: number;
+    avatar: string;
+    banner: string;
   }) => void;
 }
 

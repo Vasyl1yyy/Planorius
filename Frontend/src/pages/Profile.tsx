@@ -1,10 +1,11 @@
+import { useStoreUser } from '../store/stateZustand';
+
 export default function Profile() {
+  const user = useStoreUser((state) => state.user);
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-3xl font-bold underline text-center mt-10">
-        Welcome to the Profile Page!
-      </h1>
-      <p className="text-center mt-4">This is the page of your application.</p>
+    <div className="flex flex-col items-center justify-center h-screen container mx-auto pt-14">
+      <div></div>
     </div>
   );
 }

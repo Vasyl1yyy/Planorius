@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from '@fastify/jwt';
 import cookies from '@fastify/cookie';
 import { get } from 'http';
+import { UserSend } from '../middlewares/middlewaresUser';
 
 export async function routerUsersToken(fastify: FastifyInstance) {
   fastify.post('/token', async (req: FastifyRequest, reply: FastifyReply) => {
@@ -21,12 +22,7 @@ export async function routerUsersToken(fastify: FastifyInstance) {
         return reply.status(403).send({ error: 'Invalid token' });
       }
       reply.send({
-        user: {
-          username: user.username,
-          email: user.email,
-          level: user.level,
-          id: user.id,
-        },
+        user: UserSend(user),
       });
     } catch (err) {
       console.log(err);
@@ -82,12 +78,7 @@ export async function routerUsersRefreshToken(fastify: FastifyInstance) {
             maxAge: 10 * 60, // 10 minutes
           })
           .send({
-            user: {
-              username: user.username,
-              email: user.email,
-              level: user.level,
-              id: user.id,
-            },
+            user: UserSend(user),
           });
       } catch (err) {
         console.log(err);

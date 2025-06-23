@@ -10,6 +10,7 @@ import bcrypt from 'bcrypt';
 import jwt from '@fastify/jwt';
 import cookies from '@fastify/cookie';
 import { get } from 'http';
+import { UserSend } from '../middlewares/middlewaresUser';
 
 interface CreateUserRequest {
   email: string;
@@ -69,12 +70,7 @@ export async function routerUsersAdd(fastify: FastifyInstance) {
             maxAge: 10 * 60, // 10 minutes
           })
           .send({
-            user: {
-              id: result[0].id,
-              username: result[0].username,
-              email: result[0].email,
-              level: result[0].level,
-            },
+            user: UserSend(result[0]),
           });
       } catch (err) {
         console.log(err);
@@ -131,12 +127,7 @@ export async function routerUsersLogin(fastify: FastifyInstance) {
             maxAge: 10 * 60, // 10 minutes
           })
           .send({
-            user: {
-              username: user.username,
-              email: user.email,
-              level: user.level,
-              id: user.id,
-            },
+            user: UserSend(user),
           });
       } catch (err) {
         console.log(err);
