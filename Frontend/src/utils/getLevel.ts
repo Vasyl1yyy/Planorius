@@ -8,3 +8,8 @@ export const getPercent = (xp: number): number => {
 
   return ((xp - currentLevelXp) / (nextLevelXp - currentLevelXp)) * 100;
 };
+
+export const getNextLevelXp = (xp: number): number => {
+  const level = getLevel(xp);
+  return Math.pow((level + 1) * 10, 2);
+};
