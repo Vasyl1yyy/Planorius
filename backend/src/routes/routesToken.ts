@@ -5,6 +5,7 @@ import jwt from '@fastify/jwt';
 import cookies from '@fastify/cookie';
 import { get } from 'http';
 import { UserSend } from '../middlewares/middlewaresUser';
+import { ok } from 'assert';
 
 export async function routerUsersToken(fastify: FastifyInstance) {
   fastify.post('/token', async (req: FastifyRequest, reply: FastifyReply) => {
@@ -46,18 +47,15 @@ export async function routerUsersRefreshToken(fastify: FastifyInstance) {
           id: string;
         }
         const decoded = fastify.jwt.verify(refreshToken) as JwtPayload;
-        const user = await userId(decoded.id);
-        if (!user) {
-          return reply.status(403).send({ error: 'Invalid refresh token' });
-        }
+
         const newAccessToken = fastify.jwt.sign(
-          { id: user.id },
+          { id: decoded.id },
           {
             expiresIn: '10m',
           }
         );
         const newRefreshToken = fastify.jwt.sign(
-          { id: user.id },
+          { id: decoded.id },
           {
             expiresIn: '15d',
           }
@@ -77,9 +75,7 @@ export async function routerUsersRefreshToken(fastify: FastifyInstance) {
             secure: false, // Set to true in production
             maxAge: 10 * 60, // 10 minutes
           })
-          .send({
-            user: UserSend(user),
-          });
+          .send({ ok: true });
       } catch (err) {
         console.log(err);
         reply.status(500).send({ error: 'Failed to refresh token' });

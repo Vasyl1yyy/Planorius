@@ -3,7 +3,7 @@ import Header from './components/Header/Header';
 import SignIn from './pages/Sign/Sign-in';
 import SignUp from './pages/Sign/Sign-up';
 import { useStoreUser } from './store/stateZustand';
-import { refreshToken, token } from './api/apiToken';
+import { token } from './api/apiToken';
 import { useEffect, useState } from 'react';
 import Index from './pages/Index';
 import Tasks from './pages/Tasks';
@@ -23,10 +23,6 @@ const App = () => {
     if (userData) {
       return userData;
     }
-    const refreshData = await refreshToken();
-    if (refreshData) {
-      return refreshData;
-    }
     return null;
   };
 
@@ -37,7 +33,7 @@ const App = () => {
       setLoading(false);
     };
     fetchUserData();
-  }, []);
+  });
 
   return (
     <div>
