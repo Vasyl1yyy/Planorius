@@ -1,4 +1,4 @@
-import { eq, or } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { db } from '../db/db';
 import { users } from '../db/schema/users';
 import bcrypt from 'bcrypt';

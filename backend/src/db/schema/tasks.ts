@@ -8,7 +8,7 @@ export const tasks = pgTable('tasks', {
   difficulty: integer('difficulty').notNull().default(0),
   proirity: integer('priority').notNull().default(0),
   tag: text('tag').notNull().default(''),
-  date: timestamp('date').notNull().defaultNow(),
+  date: integer('date').notNull().default(0),
   time: integer('time').notNull().default(0),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
