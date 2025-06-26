@@ -38,12 +38,8 @@ export default function Profile() {
               {user?.username}
             </h1>
             <div className="flex items-center justify-between text-sm text-basic">
-              <p className="text-sm text-basic">
-                {'level: ' + getLevel(level)}
-              </p>
-              <span className="ml-4">
-                {user?.level + '/' + getNextLevelXp(nextLevelXp)}
-              </span>
+              <p className="text-sm text-basic">{'level: ' + level}</p>
+              <span className="ml-4">{user?.level + '/' + nextLevelXp}</span>
             </div>
           </div>
         </div>
