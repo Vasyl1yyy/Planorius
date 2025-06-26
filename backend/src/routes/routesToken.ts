@@ -1,35 +1,29 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { userId } from '../controllers/constrollersUsers';
-import bcrypt from 'bcrypt';
-import jwt from '@fastify/jwt';
-import cookies from '@fastify/cookie';
-import { get } from 'http';
 import { UserSend } from '../middlewares/middlewaresUser';
-import { ok } from 'assert';
+import { authenticate } from '../middlewares/authenticate';
 
 export async function routerUsersToken(fastify: FastifyInstance) {
-  fastify.post('/token', async (req: FastifyRequest, reply: FastifyReply) => {
-    try {
-      const token = req.cookies.accessToken;
-      if (!token) {
-        return reply.status(401).send({ error: 'Token not provided' });
+  fastify.post(
+    '/token',
+    { preHandler: authenticate },
+    async (req: FastifyRequest, reply: FastifyReply) => {
+      try {
+        const decoded = req.userIdToken;
+
+        const user = await userId(decoded);
+        if (!user) {
+          return reply.status(403).send({ error: 'Invalid token' });
+        }
+        reply.send({
+          user: UserSend(user),
+        });
+      } catch (err) {
+        console.log(err);
+        reply.status(500).send({ error: 'Failed to verify token' });
       }
-      interface JwtPayload {
-        id: string;
-      }
-      const decoded = fastify.jwt.verify(token as string) as JwtPayload;
-      const user = await userId(decoded.id);
-      if (!user) {
-        return reply.status(403).send({ error: 'Invalid token' });
-      }
-      reply.send({
-        user: UserSend(user),
-      });
-    } catch (err) {
-      console.log(err);
-      reply.status(500).send({ error: 'Failed to verify token' });
     }
-  });
+  );
 }
 
 export async function routerUsersRefreshToken(fastify: FastifyInstance) {

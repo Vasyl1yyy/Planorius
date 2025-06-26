@@ -33,7 +33,7 @@ const App = () => {
       setLoading(false);
     };
     fetchUserData();
-  });
+  }, []);
 
   return (
     <div>

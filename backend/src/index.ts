@@ -18,14 +18,22 @@ fastify.register(fastifyCors, {
   credentials: true,
 });
 
-fastify.register(jwt, {
-  secret: process.env.JWT_SECRET || 'secret',
-});
-
 fastify.register(cookie, {
   secret: process.env.COOKIE_SECRET || 'cookie',
   parseOptions: {},
 } as FastifyCookieOptions);
+
+fastify.register(jwt, {
+  secret: process.env.JWT_SECRET || 'secret',
+});
+
+declare module 'fastify' {
+  interface FastifyRequest {
+    userIdToken: string;
+  }
+}
+
+fastify.decorateRequest('userIdToken', '');
 
 fastify.register(routerUsersAdd);
 fastify.register(routerUsersLogin);

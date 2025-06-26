@@ -4,12 +4,8 @@ import {
   existingUser,
   hashPassword,
   loginUser,
-  userId,
 } from '../controllers/constrollersUsers';
 import bcrypt from 'bcrypt';
-import jwt from '@fastify/jwt';
-import cookies from '@fastify/cookie';
-import { get } from 'http';
 import { UserSend } from '../middlewares/middlewaresUser';
 
 interface CreateUserRequest {
