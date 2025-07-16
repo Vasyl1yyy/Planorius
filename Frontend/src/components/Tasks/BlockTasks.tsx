@@ -13,7 +13,7 @@ export default function BlockTasks() {
         <BlockTasksFliterTag />
         <BlockTasksFliterDate />
       </div>
-      <div className="mt-6 bg-black-100 border-2 border-black-400 p-2 rounded-xl flex flex-col gap-2">
+      <div className="mt-6 bg-black-100 border-2 border-black-400 p-2 rounded-xl flex flex-col gap-2 hover:border-basic transition">
         <BlockTasksComponentsTask
           difficulty="easy"
           priority="normal"
