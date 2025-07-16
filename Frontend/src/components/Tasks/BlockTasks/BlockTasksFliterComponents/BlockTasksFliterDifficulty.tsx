@@ -6,10 +6,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-export default function QuicklyAddTasksSelectDifficulty() {
+export default function BlockTasksFliterDifficulty() {
   return (
     <Select>
-      <SelectTrigger className="w-36 bg-black-200 border-black-400 hover:border-basic transition  text-basic font-normal border-2 border-r-1 border-b-1 rounded-none rounded-tl-xl">
+      <SelectTrigger className="w-40 bg-black-100 border-black-400 hover:border-basic transition  text-white font-normal border-2  rounded-xl">
         <SelectValue placeholder="difficulty" />
       </SelectTrigger>
       <SelectContent className="bg-black-200 border-basic border-2 rounded-2xl">

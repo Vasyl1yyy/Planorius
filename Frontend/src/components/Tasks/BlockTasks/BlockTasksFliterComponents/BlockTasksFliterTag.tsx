@@ -6,18 +6,18 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-export default function QuicklyAddTasksSelectDifficulty() {
+export default function BlockTasksFliterTag() {
   return (
     <Select>
-      <SelectTrigger className="w-36 bg-black-200 border-black-400 hover:border-basic transition  text-basic font-normal border-2 border-r-1 border-b-1 rounded-none rounded-tl-xl">
-        <SelectValue placeholder="difficulty" />
+      <SelectTrigger className="w-40 bg-black-100 border-black-400 hover:border-basic transition  text-white font-normal border-2 rounded-xl">
+        <SelectValue placeholder="tag" />
       </SelectTrigger>
       <SelectContent className="bg-black-200 border-basic border-2 rounded-2xl">
         <SelectItem
           value="easy"
           className=" text-basic hover:bg-black-300 rounded-2xl transition"
         >
-          easy
+          dev
         </SelectItem>
         <SelectItem
           value="normal"
@@ -29,7 +29,13 @@ export default function QuicklyAddTasksSelectDifficulty() {
           value="hard"
           className=" text-basic hover:bg-black-300 rounded-2xl transition"
         >
-          hard
+          artem
+        </SelectItem>
+        <SelectItem
+          value="urgent"
+          className=" text-basic hover:bg-black-300 rounded-2xl transition"
+        >
+          urgent
         </SelectItem>
       </SelectContent>
     </Select>

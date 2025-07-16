@@ -6,11 +6,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-export default function QuicklyAddTasksSelectDifficulty() {
+export default function BlockTasksFliterProirity() {
   return (
     <Select>
-      <SelectTrigger className="w-36 bg-black-200 border-black-400 hover:border-basic transition  text-basic font-normal border-2 border-r-1 border-b-1 rounded-none rounded-tl-xl">
-        <SelectValue placeholder="difficulty" />
+      <SelectTrigger className="w-40 bg-black-100 border-black-400 hover:border-basic transition  text-white font-normal border-2 rounded-xl">
+        <SelectValue placeholder="proirity" />
       </SelectTrigger>
       <SelectContent className="bg-black-200 border-basic border-2 rounded-2xl">
         <SelectItem
@@ -30,6 +30,12 @@ export default function QuicklyAddTasksSelectDifficulty() {
           className=" text-basic hover:bg-black-300 rounded-2xl transition"
         >
           hard
+        </SelectItem>
+        <SelectItem
+          value="urgent"
+          className=" text-basic hover:bg-black-300 rounded-2xl transition"
+        >
+          urgent
         </SelectItem>
       </SelectContent>
     </Select>
