@@ -28,7 +28,6 @@ export default function BlockTasks() {
           date="2025-07-17"
           text="Fix the critical bug in the application"
         />
-        {/* Add more tasks as needed */}
       </div>
     </div>
   );

@@ -57,14 +57,14 @@ export async function routerUsersRefreshToken(fastify: FastifyInstance) {
         reply
           .setCookie('refreshToken', newRefreshToken, {
             httpOnly: true,
-            path: '/refreshToken',
+            path: '/',
             sameSite: 'strict',
             secure: false, // Set to true in production
             maxAge: 15 * 24 * 60 * 60, // 15 days
           })
           .setCookie('accessToken', newAccessToken, {
             httpOnly: true,
-            path: '/token',
+            path: '/',
             sameSite: 'strict',
             secure: false, // Set to true in production
             maxAge: 10 * 60, // 10 minutes

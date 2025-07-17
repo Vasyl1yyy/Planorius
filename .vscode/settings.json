@@ -12,5 +12,20 @@
       "database": "planorius",
       "username": "postgres"
     }
+  ],
+  "cSpell.words": [
+    "constrollers",
+    "decorate",
+    "Popover",
+    "production",
+    "provided",
+    "Quickly",
+    "rounded",
+    "Запуск",
+    "змінної",
+    "Ініціалізація",
+    "Реєстрація",
+    "роутів",
+    "сервера"
   ]
 }

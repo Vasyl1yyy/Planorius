@@ -42,6 +42,16 @@ interface TasksState {
   }) => void;
 }
 
+interface TagState {
+  tags:
+    | {
+        id: number;
+        title: string;
+      }[]
+    | null;
+  setTags: (tags: { id: number; title: string }[]) => void;
+}
+
 export const useStoreUser = create<UserState>((set) => ({
   user: null,
   setUser: (user) => set({ user: user }),
@@ -50,4 +60,9 @@ export const useStoreUser = create<UserState>((set) => ({
 export const useStoreTasks = create<TasksState>((set) => ({
   tasks: null,
   setTasks: (tasks) => set({ tasks: tasks }),
+}));
+
+export const useStoreTags = create<TagState>((set) => ({
+  tags: null,
+  setTags: (tags) => set({ tags: tags }),
 }));

@@ -1,10 +1,12 @@
+import { fetchAutoRefresh } from './apiToken';
+
 export const registerUser = async (
   email: string,
   username: string,
   password: string
 ) => {
   try {
-    const response = await fetch('http://localhost:3000/addUser', {
+    const response = await fetchAutoRefresh('http://localhost:3000/addUser', {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -23,7 +25,7 @@ export const registerUser = async (
 
 export const loginUser = async (username: string, password: string) => {
   try {
-    const response = await fetch('http://localhost:3000/login', {
+    const response = await fetchAutoRefresh('http://localhost:3000/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',

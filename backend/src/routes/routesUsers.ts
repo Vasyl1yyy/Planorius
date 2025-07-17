@@ -53,14 +53,14 @@ export async function routerUsersAdd(fastify: FastifyInstance) {
         reply
           .setCookie('refreshToken', refreshToken, {
             httpOnly: true,
-            path: '/refreshToken',
+            path: '/',
             sameSite: 'strict',
             secure: false, // Set to true in production
             maxAge: 15 * 24 * 60 * 60, // 15 days
           })
           .setCookie('accessToken', accessToken, {
             httpOnly: true,
-            path: '/token',
+            path: '/',
             sameSite: 'strict',
             secure: false, // Set to true in production
             maxAge: 10 * 60, // 10 minutes
@@ -110,14 +110,14 @@ export async function routerUsersLogin(fastify: FastifyInstance) {
         reply
           .setCookie('refreshToken', refreshToken, {
             httpOnly: true,
-            path: '/refreshToken',
+            path: '/',
             sameSite: 'strict',
             secure: false, // Set to true in production
             maxAge: 15 * 24 * 60 * 60, // 15 days
           })
           .setCookie('accessToken', accessToken, {
             httpOnly: true,
-            path: '/token',
+            path: '/',
             sameSite: 'strict',
             secure: false, // Set to true in production
             maxAge: 10 * 60, // 10 minutes

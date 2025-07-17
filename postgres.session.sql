@@ -1,1 +1,2 @@
-SELECT * FROM users;
+TRUNCATE TABLE tags;
+

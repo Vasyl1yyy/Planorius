@@ -14,16 +14,20 @@ interface CreateTasksRequest {
 
 export async function routerTasksAdd(fastify: FastifyInstance) {
   fastify.post(
-    '/addUser',
+    '/addTasks',
     { preHandler: authenticate },
     async (req: FastifyRequest, reply: FastifyReply) => {
       try {
         const { title, difficulty, proirity, tag, date, time } =
           req.body as CreateTasksRequest;
-        const userId = (req as any).userIdToken;
+        const userId = req.userIdToken;
+
+        if (!userId) {
+          return reply.status(403).send({ error: 'User ID not provided' });
+        }
 
         const result = await addTasks({
-          userId,
+          userId: Number(userId),
           title,
           difficulty,
           proirity,

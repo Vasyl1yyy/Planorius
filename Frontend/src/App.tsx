@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router';
 import Header from './components/Header/Header';
 import SignIn from './pages/Sign/Sign-in';
 import SignUp from './pages/Sign/Sign-up';
-import { useStoreUser } from './store/stateZustand';
+import { useStoreTags, useStoreUser } from './store/stateZustand';
 import { token } from './api/apiToken';
 import { useEffect, useState } from 'react';
 import Index from './pages/Index';
@@ -13,14 +13,20 @@ import Friends from './pages/Friends';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Planorius from './img/logo-loading.gif';
+import { tags } from './api/apiTags';
 
 const App = () => {
   const user = useStoreUser((state) => state.user);
   const [loading, setLoading] = useState(true);
   const setUser = useStoreUser((state) => state.setUser);
+  const setTags = useStoreTags((state) => state.setTags);
   const fetchUser = async () => {
     const userData = await token();
     if (userData) {
+      const userTags = await tags();
+      if (userTags && userTags.length > 0) {
+        setTags(userTags);
+      }
       return userData;
     }
     return null;
