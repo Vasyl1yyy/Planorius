@@ -9,6 +9,7 @@ import {
   routerUsersToken,
 } from './routes/routesToken';
 import { routerTags, routesAddTag } from './routes/routesTags';
+import { routerTasks, routerTasksAdd } from './routes/routesTasks';
 
 dotenv.config();
 
@@ -48,6 +49,8 @@ fastify.register(routerUsersToken);
 fastify.register(routerUsersRefreshToken);
 fastify.register(routerTags);
 fastify.register(routesAddTag);
+fastify.register(routerTasksAdd);
+fastify.register(routerTasks);
 
 // Запуск сервера
 fastify.listen({ port: 3000 }, () => {

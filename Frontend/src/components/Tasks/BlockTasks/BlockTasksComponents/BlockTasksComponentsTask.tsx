@@ -1,18 +1,25 @@
+import { useStoreTags } from '@/store/stateZustand';
 import { GoKebabHorizontal } from 'react-icons/go';
 
 export default function BlockTasksComponentsTask({
+  key,
+  id,
   difficulty,
   priority,
   tag,
   date,
   text,
 }: {
-  difficulty: string;
-  priority: string;
-  tag: string;
+  key: number;
+  id?: number;
+  difficulty: number;
+  priority: number;
+  tag: number;
   date: string;
   text: string;
 }) {
+  const tags = useStoreTags((state) => state.tags);
+
   function formatDate(dateStr: string): string {
     const inputDate = new Date(dateStr);
     const today = new Date();
@@ -51,13 +58,20 @@ export default function BlockTasksComponentsTask({
       : `${month} ${day}, ${year}`;
   }
 
+  const formatTag = (tagId: number): string => {
+    const tagItem = tags?.find((t) => t.id === tagId);
+    return tagItem ? tagItem.title : '';
+  };
+
   return (
     <div
+      key={key}
+      id={id ? id.toString() : undefined}
       className={
         'border-2 rounded-full bg-black-300 p-1.5' +
-        ` ${difficulty === 'easy' ? 'border-basic' : ''} ` +
-        `${difficulty === 'normal' ? 'border-yellow' : ''} ` +
-        `${difficulty === 'hard' ? 'border-red' : ''}`
+        ` ${difficulty === 0 ? 'border-basic' : ''} ` +
+        `${difficulty === 1 ? 'border-yellow' : ''} ` +
+        `${difficulty === 2 ? 'border-red' : ''}`
       }
     >
       <div className="grid grid-cols-24 items-center text-sm  text-basic">
@@ -66,7 +80,9 @@ export default function BlockTasksComponentsTask({
         </span>
         <span className="col-span-12 text-white pt-1">{text}</span>
         <span className="col-span-3 flex justify-center ">
-          <div className="bg-basiclight px-3 rounded-full pt-1">{tag}</div>
+          <div className="bg-basiclight px-3 rounded-full pt-1">
+            {formatTag(tag)}
+          </div>
         </span>
         <span className="col-span-4 text-center pt-1">{formatDate(date)}</span>
         <span className="col-span-3 text-center pt-1">{priority}</span>

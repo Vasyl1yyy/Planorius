@@ -20,26 +20,28 @@ interface UserState {
 }
 
 interface TasksState {
-  tasks: {
-    id: number;
-    userId: string;
-    title: string;
-    difficulty: number;
-    proirity: number;
-    tag: string;
-    date: number;
-    time: number;
-  } | null;
-  setTasks: (tasks: {
-    id: number;
-    userId: string;
-    title: string;
-    difficulty: number;
-    proirity: number;
-    tag: string;
-    date: number;
-    time: number;
-  }) => void;
+  tasks:
+    | {
+        id: number;
+        userId: string;
+        title: string;
+        difficulty: number;
+        proirity: number;
+        tag: number;
+        date: string;
+      }[]
+    | null;
+  setTasks: (
+    tasks: {
+      id: number;
+      userId: string;
+      title: string;
+      difficulty: number;
+      proirity: number;
+      tag: number;
+      date: string;
+    }[]
+  ) => void;
 }
 
 interface TagState {
