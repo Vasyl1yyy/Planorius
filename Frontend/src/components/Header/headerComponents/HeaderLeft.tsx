@@ -4,12 +4,13 @@ import { GoHomeFill } from 'react-icons/go';
 import { CgGoogleTasks } from 'react-icons/cg';
 import { FaRepeat } from 'react-icons/fa6';
 import { FaFileContract } from 'react-icons/fa';
-import { BsPeopleFill } from 'react-icons/bs';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { RiSettings4Fill } from 'react-icons/ri';
 import { NavLink } from 'react-router';
 import { useState } from 'react';
 import NavLinkComponents from './headerComponentsEment/NavLinkComponents';
+import { AiFillMessage } from 'react-icons/ai';
+import { IoStatsChart } from 'react-icons/io5';
 
 export default function HeaderLeft() {
   const [active, setActive] = useState('w-14');
@@ -77,13 +78,19 @@ export default function HeaderLeft() {
           active={active}
           activePage={activePage === '/scripts' ? true : false}
         />
-
         <NavLinkComponents
-          to="/friends"
-          icon={<BsPeopleFill className="text-basic w-[30px]" />}
-          label="friends"
+          to="/messages"
+          icon={<AiFillMessage className="text-basic w-[30px] text-2xl" />}
+          label="messages"
           active={active}
-          activePage={activePage === '/friends' ? true : false}
+          activePage={activePage === '/messages' ? true : false}
+        />
+        <NavLinkComponents
+          to="/statistics"
+          icon={<IoStatsChart className="text-basic w-[30px] text-2xl" />}
+          label="statistics"
+          active={active}
+          activePage={activePage === '/statistics' ? true : false}
         />
       </div>
       <div

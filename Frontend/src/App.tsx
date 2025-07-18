@@ -9,11 +9,12 @@ import Index from './pages/Index';
 import Tasks from './pages/Tasks';
 import Habits from './pages/Habits';
 import Scripts from './pages/Scripts';
-import Friends from './pages/Friends';
+import Friends from './pages/Messages';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Planorius from './img/logo-loading.gif';
 import { tags } from './api/apiTags';
+import Statistics from './pages/Statistiscs';
 
 const App = () => {
   const user = useStoreUser((state) => state.user);
@@ -68,7 +69,8 @@ const App = () => {
                 <Route path="/tasks" element={<Tasks />} />
                 <Route path="/habits" element={<Habits />} />
                 <Route path="/scripts" element={<Scripts />} />
-                <Route path="/friends" element={<Friends />} />
+                <Route path="/messages" element={<Friends />} />
+                <Route path="/statistics" element={<Statistics />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
