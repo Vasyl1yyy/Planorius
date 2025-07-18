@@ -63,12 +63,27 @@ export default function BlockTasksComponentsTask({
     return tagItem ? tagItem.title : '';
   };
 
+  const formatPriority = (priority: number): string => {
+    switch (priority) {
+      case 0:
+        return 'easy';
+      case 1:
+        return 'normal';
+      case 2:
+        return 'hard';
+      case 3:
+        return 'urgent';
+      default:
+        return '';
+    }
+  };
+
   return (
     <div
       key={key}
       id={id ? id.toString() : undefined}
       className={
-        'border-2 rounded-full bg-black-300 p-1.5' +
+        'border-2 rounded-full bg-black-300 p-1.5 mb-2' +
         ` ${difficulty === 0 ? 'border-basic' : ''} ` +
         `${difficulty === 1 ? 'border-yellow' : ''} ` +
         `${difficulty === 2 ? 'border-red' : ''}`
@@ -85,7 +100,9 @@ export default function BlockTasksComponentsTask({
           </div>
         </span>
         <span className="col-span-4 text-center pt-1">{formatDate(date)}</span>
-        <span className="col-span-3 text-center pt-1">{priority}</span>
+        <span className="col-span-3 text-center pt-1">
+          {formatPriority(priority)}
+        </span>
         <span className="col-span-1 flex justify-end rotate-90 pr-1.5 pb-2 text-base cursor-pointer">
           <GoKebabHorizontal />
         </span>

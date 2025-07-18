@@ -19,7 +19,11 @@ import { useState } from 'react';
 import { useStoreTags } from '@/store/stateZustand';
 import { addTag } from '@/api/apiTags';
 
-export default function QuicklyAddTasksSelectTag() {
+export default function QuicklyAddTasksSelectTag({
+  setValues,
+}: {
+  setValues: (value: string) => void;
+}) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const [title, setTitle] = useState('');
@@ -71,6 +75,7 @@ export default function QuicklyAddTasksSelectTag() {
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? '' : currentValue);
                     setOpen(false);
+                    setValues(currentValue.split(' ')[0]);
                   }}
                   className="hover:bg-black-300 transition rounded-2xl border-2 border-black-200  "
                 >

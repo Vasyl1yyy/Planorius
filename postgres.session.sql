@@ -1,2 +1,2 @@
-TRUNCATE TABLE tags;
+TRUNCATE TABLE tasks;
 

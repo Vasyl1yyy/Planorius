@@ -10,7 +10,11 @@ import {
 } from '@/components/ui/popover';
 import { useState } from 'react';
 
-export default function QuicklyAddTasksSelectDate() {
+export default function QuicklyAddTasksSelectDate({
+  setValue,
+}: {
+  setValue?: (value: string) => void;
+}) {
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>(undefined);
   const currentDate = new Date();
@@ -40,6 +44,9 @@ export default function QuicklyAddTasksSelectDate() {
             onSelect={(date) => {
               setDate(date);
               setOpen(false);
+              if (setValue) {
+                setValue(date?.toLocaleDateString() || '');
+              }
             }}
           />
         </PopoverContent>

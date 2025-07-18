@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 @config "../tailwind.config.js";
@@ -13,6 +13,18 @@ body {
   font-family: 'peridot-devanagari', sans-serif;
   font-weight: 400;
   font-style: normal;
+}
+
+div::-webkit-scrollbar {
+  width: 3px; /* ширина всієї смуги прокрутки */
+}
+div::-webkit-scrollbar-track {
+  background: transparent; /* колір скролінгової області */
+}
+div::-webkit-scrollbar-thumb {
+  background-color: gray; /* колір скролбару */
+  border-radius: 20px; /* заокруглення скролбару */
+  border: 5px solid transparent; /* додає паддінги навколу скролу */
 }
 
 @theme inline {

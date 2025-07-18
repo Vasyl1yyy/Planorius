@@ -4,33 +4,20 @@ import BlockTasksFliterDate from './BlockTasks/BlockTasksFliterComponents/BlockT
 import BlockTasksFliterDifficulty from './BlockTasks/BlockTasksFliterComponents/BlockTasksFliterDifficulty';
 import BlockTasksFliterProirity from './BlockTasks/BlockTasksFliterComponents/BlockTasksFliterProirity';
 import BlockTasksFliterTag from './BlockTasks/BlockTasksFliterComponents/BlockTasksFliterTag';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export default function BlockTasks() {
   const { tasks } = useStoreTasks((state) => state);
-  console.log(tasks);
   return (
-    <div className="bg-black-200 border-2 border-black-400 p-6 hover:border-basic transition rounded-xl">
+    <div className="bg-black-200 border-2 border-black-400 p-6 max-h-3/4 hover:border-basic transition rounded-xl flex flex-col">
       <div className="flex gap-8">
         <BlockTasksFliterDifficulty />
         <BlockTasksFliterProirity />
         <BlockTasksFliterTag />
         <BlockTasksFliterDate />
       </div>
-      <div className="mt-6 bg-black-100 border-2 border-black-400 p-2 rounded-xl flex flex-col gap-2 hover:border-basic transition">
-        {/* <BlockTasksComponentsTask
-          difficulty="easy"
-          priority="normal"
-          tag="dev"
-          date="2025-07-16"
-          text="Complete the frontend task"
-        />
-        <BlockTasksComponentsTask
-          difficulty="hard"
-          priority="urgent"
-          tag="artem"
-          date="2025-07-17"
-          text="Fix the critical bug in the application"
-        /> */}
+      <ScrollArea className="mt-6 bg-black-100 border-2 border-black-400 px-2 rounded-xl flex   hover:border-basic transition  overflow-y-auto">
+        <div className="h-2"></div>
         {tasks && tasks.length > 0 ? (
           tasks.map((task) => (
             <BlockTasksComponentsTask
@@ -46,7 +33,7 @@ export default function BlockTasks() {
         ) : (
           <div className="text-center text-basic">No tasks available</div>
         )}
-      </div>
+      </ScrollArea>
     </div>
   );
 }

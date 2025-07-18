@@ -6,7 +6,10 @@ type NewTask = typeof tasks.$inferInsert;
 
 const addTasks = async (task: NewTask) => {
   try {
-    return await db.insert(tasks).values(task).returning();
+    await db.insert(tasks).values(task).returning();
+    return await db.query.tasks.findMany({
+      where: eq(tasks.userId, Number(task.userId)),
+    });
   } catch (error) {
     console.error('DB Error:', error);
     throw new Error('Помилка при створенні задачі');
