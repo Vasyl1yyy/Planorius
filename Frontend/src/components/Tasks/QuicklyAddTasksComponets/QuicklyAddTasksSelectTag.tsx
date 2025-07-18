@@ -43,7 +43,7 @@ export default function QuicklyAddTasksSelectTag() {
           aria-expanded={open}
           className="w-56 justify-between text-basic rounded-none border-1 border-t-2  border-black-400 bg-black-200 hover:border-basic transition"
         >
-          {title ? title : 'tag'}
+          {title ? title : value ? value.split(' ')[1] : 'tag'}
           <FaAngleDown />
         </Button>
       </PopoverTrigger>
