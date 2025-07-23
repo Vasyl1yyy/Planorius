@@ -35,3 +35,19 @@ export const addTasks = async (
     console.error('Error:', error);
   }
 };
+
+export const doneTasks = async (id: number, doneNum: number) => {
+  try {
+    const response = await fetchAutoRefresh('http://localhost:3000/doneTasks', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, doneNum }),
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};

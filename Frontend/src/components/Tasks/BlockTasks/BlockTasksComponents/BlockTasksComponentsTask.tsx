@@ -1,9 +1,12 @@
+import { doneTasks } from '@/api/apiTasks';
 import { useStoreTags } from '@/store/stateZustand';
+import { useState } from 'react';
 import { GoKebabHorizontal } from 'react-icons/go';
 
 export default function BlockTasksComponentsTask({
   key,
   id,
+  done,
   difficulty,
   priority,
   tag,
@@ -12,6 +15,7 @@ export default function BlockTasksComponentsTask({
 }: {
   key: number;
   id?: number;
+  done: number;
   difficulty: number;
   priority: number;
   tag: number;
@@ -19,6 +23,7 @@ export default function BlockTasksComponentsTask({
   text: string;
 }) {
   const tags = useStoreTags((state) => state.tags);
+  const [doneNumTasks, setDoneNumTasks] = useState(done);
 
   function formatDate(dateStr: string): string {
     const inputDate = new Date(dateStr);
@@ -83,7 +88,7 @@ export default function BlockTasksComponentsTask({
       key={key}
       id={id ? id.toString() : undefined}
       className={
-        'border-2 rounded-full bg-black-300 p-1.5 mb-2' +
+        'border-2 rounded-full bg-black-300 hover:bg-black-400 transition p-1.5 mb-2' +
         ` ${difficulty === 0 ? 'border-basic' : ''} ` +
         `${difficulty === 1 ? 'border-yellow' : ''} ` +
         `${difficulty === 2 ? 'border-red' : ''}`
@@ -91,7 +96,16 @@ export default function BlockTasksComponentsTask({
     >
       <div className="grid grid-cols-24 items-center text-sm  text-basic">
         <span className="col-span-1 flex">
-          <div className="border-2 border-basic rounded-full p-2 cursor-pointer"></div>
+          <div
+            onClick={() => {
+              doneTasks(id as number, doneNumTasks === 0 ? 1 : 0);
+              setDoneNumTasks(doneNumTasks === 0 ? 1 : 0);
+            }}
+            className={
+              'border-2 border-basic rounded-full p-2 cursor-pointer' +
+              ` ${doneNumTasks === 1 ? 'bg-basic' : ''}`
+            }
+          ></div>
         </span>
         <span className="col-span-12 text-white pt-1">{text}</span>
         <span className="col-span-3 flex justify-center ">

@@ -23,6 +23,7 @@ export default function BlockTasks() {
             <BlockTasksComponentsTask
               key={task.id}
               id={task.id}
+              done={task.done}
               difficulty={task.difficulty}
               priority={task.proirity}
               tag={task.tag}

@@ -24,6 +24,7 @@ interface TasksState {
     | {
         id: number;
         userId: string;
+        done: number;
         title: string;
         difficulty: number;
         proirity: number;
@@ -35,6 +36,7 @@ interface TasksState {
     tasks: {
       id: number;
       userId: string;
+      done: number;
       title: string;
       difficulty: number;
       proirity: number;

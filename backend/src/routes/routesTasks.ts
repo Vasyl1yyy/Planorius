@@ -1,6 +1,10 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { authenticate } from '../middlewares/authenticate';
-import { addTasks, userTasks } from '../controllers/constrollersTasks';
+import {
+  addTasks,
+  userTasks,
+  doneTasks,
+} from '../controllers/constrollersTasks';
 
 interface CreateTasksRequest {
   userId: string;
@@ -61,6 +65,37 @@ export async function routerTasks(fastify: FastifyInstance) {
       } catch (err) {
         console.log(err);
         reply.status(500).send({ error: '' });
+      }
+    }
+  );
+}
+
+export async function routerDoneTasks(fastify: FastifyInstance) {
+  fastify.post(
+    '/doneTasks',
+    { preHandler: authenticate },
+    async (req: FastifyRequest, reply: FastifyReply) => {
+      try {
+        const { id, doneNum } = req.body as { id: number; doneNum: number };
+        const userId = req.userIdToken;
+
+        if (!userId) {
+          return reply.status(403).send({ error: 'User ID not provided' });
+        }
+
+        if (!id) {
+          return reply.status(400).send({ error: 'Task ID not provided' });
+        }
+
+        const result = await doneTasks(
+          Number(id),
+          Number(doneNum),
+          Number(userId)
+        );
+        reply.send(result);
+      } catch (err) {
+        console.log(err);
+        reply.status(500).send({ error: 'Failed to mark task as done' });
       }
     }
   );

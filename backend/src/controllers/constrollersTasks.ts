@@ -27,4 +27,16 @@ const userTasks = async (userId: string) => {
   }
 };
 
-export { addTasks, userTasks };
+const doneTasks = async (taskId: number, doneNum: number, userId: number) => {
+  try {
+    await db.update(tasks).set({ done: doneNum }).where(eq(tasks.id, taskId));
+    return await db.query.tasks.findMany({
+      where: eq(tasks.userId, userId),
+    });
+  } catch (error) {
+    console.error('DB Error:', error);
+    throw new Error('Помилка при позначенні задачі як виконаної');
+  }
+};
+
+export { addTasks, userTasks, doneTasks };
