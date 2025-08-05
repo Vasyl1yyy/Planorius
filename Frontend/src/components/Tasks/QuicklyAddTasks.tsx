@@ -44,7 +44,8 @@ export default function QuicklyAddTasks() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           type="text"
-          className="bg-black-200 border-1 border-black-400 border-l-2 border-b-2 rounded-none rounded-bl-xl text-basic hover:border-basic transition"
+          placeholder="Task title..."
+          className="bg-black-200 border-1 border-black-400 border-l-2 border-b-2 rounded-none rounded-bl-xl text-basic hover:border-basic transition placeholder:text-black-400 focus:outline-none focus:border-basic"
         />
         <Button
           onClick={() => addNewTasks()}
